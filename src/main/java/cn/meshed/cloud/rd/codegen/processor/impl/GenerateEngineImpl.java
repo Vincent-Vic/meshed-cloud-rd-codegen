@@ -1,29 +1,27 @@
 package cn.meshed.cloud.rd.codegen.processor.impl;
 
 import cn.hutool.json.JSONUtil;
-import cn.meshed.cloud.rd.codegen.processor.GenerateEngine;
 import cn.meshed.cloud.rd.codegen.factory.TemplateFactory;
 import cn.meshed.cloud.rd.codegen.model.JavaDefinition;
-import cn.meshed.cloud.rd.codegen.processor.PackageProcessor;
+import cn.meshed.cloud.rd.codegen.processor.GenerateEngine;
 import com.alibaba.cola.exception.SysException;
 import freemarker.template.Template;
+import lombok.RequiredArgsConstructor;
 
 import java.io.StringWriter;
 import java.util.Map;
 
 /**
- * <h1></h1>
+ * <h1>生成核心类</h1>
  *
  * @author Vincent Vic
  * @version 1.0
  */
+@RequiredArgsConstructor
 public class GenerateEngineImpl implements GenerateEngine {
 
-    private final TemplateFactory factory;
+    private final TemplateFactory templateFactory;
 
-    public GenerateEngineImpl() {
-        this.factory = new TemplateFactory();
-    }
 
     /**
      * 生成代码
@@ -36,7 +34,7 @@ public class GenerateEngineImpl implements GenerateEngine {
     public String generate(String templateName, JavaDefinition data) throws SysException {
         Map dataMap = JSONUtil.toBean(JSONUtil.toJsonStr(data), Map.class);
         try {
-            Template template = factory.getTemplate(String.format("%s.ftl",templateName));
+            Template template = templateFactory.getTemplate(String.format("%s.ftl",templateName));
             StringWriter sw = new StringWriter();
             template.process(dataMap,sw);
             return sw.toString();

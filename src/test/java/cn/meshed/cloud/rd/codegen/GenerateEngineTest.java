@@ -3,9 +3,8 @@ package cn.meshed.cloud.rd.codegen;
 
 import cn.meshed.cloud.rd.codegen.model.JavaInterface;
 import cn.meshed.cloud.rd.codegen.model.JavaMethod;
-import cn.meshed.cloud.rd.codegen.model.JavaParameter;
-import cn.meshed.cloud.rd.codegen.processor.impl.GenerateEngineImpl;
 import cn.meshed.cloud.rd.codegen.model.JavaModel;
+import cn.meshed.cloud.rd.codegen.model.JavaParameter;
 import cn.meshed.cloud.rd.codegen.processor.GenerateEngine;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +25,7 @@ public class GenerateEngineTest {
 
     @Before
     public void init(){
-        generateEngine = new GenerateEngineImpl();
+        generateEngine = TestBeanFactory.newGenerateEngine();
     }
 
     @Test

@@ -1,19 +1,17 @@
 package cn.meshed.cloud.rd.codegen.processor.impl;
 
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.json.JSONNull;
 import cn.hutool.json.JSONUtil;
 import cn.meshed.cloud.rd.codegen.Field;
+import cn.meshed.cloud.rd.codegen.config.GenerateProperties;
 import cn.meshed.cloud.rd.codegen.processor.AnnotationProcessor;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import static cn.meshed.cloud.rd.codegen.constant.Constant.ANNOTATION_FORMAT;
 import static cn.meshed.cloud.rd.codegen.constant.Constant.ANNOTATION_PARAMETER_FORMAT;
@@ -24,12 +22,15 @@ import static cn.meshed.cloud.rd.codegen.constant.Constant.STRING;
 import static cn.meshed.cloud.rd.codegen.constant.Constant.VALUE;
 
 /**
- * <h1></h1>
+ * <h1>注解处理器</h1>
  *
  * @author Vincent Vic
  * @version 1.0
  */
+@RequiredArgsConstructor
 public class AnnotationProcessorImpl implements AnnotationProcessor {
+
+    private final GenerateProperties generateProperties;
 
     /**
      * 生成字段注解
@@ -57,13 +58,17 @@ public class AnnotationProcessorImpl implements AnnotationProcessor {
             Map<String, Map<String, Object>> annotationMap = JSONUtil.toBean(field.getAnnotationJson(), Map.class);
             if (!annotationMap.isEmpty()) {
 
-                Map<String, Map<String, Object>> annotationRule = getAnnotationRule();
+                Map<String, Map<String, String>> annotationRule = getAnnotationRule();
+                //外部传递可能存在null
+                if (annotationRule == null || annotationRule.isEmpty()){
+                    return;
+                }
                 for (Map.Entry<String, Map<String, Object>> entry : annotationMap.entrySet()) {
 
                     Map<String, Object> args = new HashMap<>();
                     String annotationName = entry.getKey();
                     //获取规则map
-                    Map<String, Object> annotationRuleMap = annotationRule.get(annotationName);
+                    Map<String, String> annotationRuleMap = annotationRule.get(annotationName);
                     if (annotationRuleMap == null){
                         continue;
                     }
@@ -77,7 +82,7 @@ public class AnnotationProcessorImpl implements AnnotationProcessor {
                     if (map == null){
                         continue;
                     }
-                    for (Map.Entry<String, Object> objectEntry : annotationRuleMap.entrySet()) {
+                    for (Map.Entry<String, String> objectEntry : annotationRuleMap.entrySet()) {
                         Object value = map.get(objectEntry.getKey());
                         //规则中未取到值则放弃此参数
                         if (value == null) {
@@ -175,9 +180,8 @@ public class AnnotationProcessorImpl implements AnnotationProcessor {
         return getAnnotation(annotationName);
     }
 
-    private Map<String, Map<String, Object>> getAnnotationRule() {
-        String str = FileUtil.readString("annotationRule.json", StandardCharsets.UTF_8);
-        return JSONUtil.toBean(str, Map.class);
+    private Map<String, Map<String, String>> getAnnotationRule() {
+        return generateProperties.getAnnotationRule();
     }
 
 

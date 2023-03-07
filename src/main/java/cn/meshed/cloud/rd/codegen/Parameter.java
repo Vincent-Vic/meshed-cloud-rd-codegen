@@ -4,7 +4,6 @@ import cn.meshed.cloud.rd.codegen.constant.ParameterType;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;

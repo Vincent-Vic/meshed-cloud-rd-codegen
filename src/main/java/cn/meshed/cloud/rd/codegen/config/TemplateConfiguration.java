@@ -1,11 +1,9 @@
 package cn.meshed.cloud.rd.codegen.config;
 
+import cn.meshed.cloud.rd.codegen.factory.TemplateFactory;
+import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
-import freemarker.template.Template;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
+import org.springframework.context.annotation.Bean;
 
 /**
  * <h1></h1>
@@ -15,21 +13,17 @@ import java.net.URL;
  */
 public class TemplateConfiguration {
 
+    @Bean
     public Configuration configuration(){
         Configuration configuration = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
-        try {
-            configuration.setDirectoryForTemplateLoading(getTemplatePath());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        configuration.setDefaultEncoding("UTF-8");
+        configuration.setTemplateLoader(new ClassTemplateLoader(TemplateConfiguration.class,"/templates/"));
         return configuration;
     }
 
-    public File getTemplatePath(){
-        URL templates = ClassLoader.getSystemResource("templates");
-        if (templates == null || templates.getFile() == null){
-            throw new RuntimeException("模板资源不存在");
-        }
-        return new File(templates.getFile());
+    @Bean
+    public TemplateFactory templateFactory(){
+        return new TemplateFactory();
     }
+
 }

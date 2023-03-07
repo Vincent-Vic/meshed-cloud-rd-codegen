@@ -3,10 +3,8 @@ package cn.meshed.cloud.rd.codegen;
 import cn.meshed.cloud.rd.codegen.constant.RequestType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import static cn.meshed.cloud.rd.codegen.constant.Constant.ANNOTATION_FORMAT;

@@ -1,12 +1,10 @@
 package cn.meshed.cloud.rd.codegen.model;
 
-import lombok.Builder;
 import lombok.Data;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**

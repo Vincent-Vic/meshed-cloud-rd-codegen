@@ -1,10 +1,7 @@
 package cn.meshed.cloud.rd.codegen.processor;
 
-import cn.meshed.cloud.rd.codegen.Adapter;
 import cn.meshed.cloud.rd.codegen.AdapterMethod;
 import cn.meshed.cloud.rd.codegen.Method;
-import cn.meshed.cloud.rd.codegen.Model;
-import cn.meshed.cloud.rd.codegen.Rpc;
 import cn.meshed.cloud.rd.codegen.model.JavaInterface;
 import cn.meshed.cloud.rd.codegen.model.JavaModel;
 

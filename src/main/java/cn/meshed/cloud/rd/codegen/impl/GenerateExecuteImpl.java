@@ -1,7 +1,6 @@
 package cn.meshed.cloud.rd.codegen.impl;
 
 import cn.meshed.cloud.rd.codegen.Adapter;
-import cn.meshed.cloud.rd.codegen.AdapterMethod;
 import cn.meshed.cloud.rd.codegen.Field;
 import cn.meshed.cloud.rd.codegen.GenerateExecute;
 import cn.meshed.cloud.rd.codegen.Method;
@@ -18,9 +17,7 @@ import cn.meshed.cloud.rd.codegen.model.JavaParameter;
 import cn.meshed.cloud.rd.codegen.processor.AnnotationProcessor;
 import cn.meshed.cloud.rd.codegen.processor.GenerateEngine;
 import cn.meshed.cloud.rd.codegen.processor.PackageProcessor;
-import cn.meshed.cloud.rd.codegen.processor.impl.AnnotationProcessorImpl;
-import cn.meshed.cloud.rd.codegen.processor.impl.GenerateEngineImpl;
-import cn.meshed.cloud.rd.codegen.processor.impl.PackageProcessorImpl;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;
@@ -31,22 +28,17 @@ import java.util.stream.Collectors;
 import static cn.meshed.cloud.rd.codegen.constant.Constant.ANNOTATION_SIMPLE_PARAMETER_FORMAT;
 
 /**
- * <h1></h1>
+ * <h1>生成执行器</h1>
  *
  * @author Vincent Vic
  * @version 1.0
  */
+@RequiredArgsConstructor
 public class GenerateExecuteImpl implements GenerateExecute {
 
     private final GenerateEngine generateEngine;
     private final PackageProcessor packageProcessor;
     private final AnnotationProcessor annotationProcessor;
-
-    public GenerateExecuteImpl() {
-        this.generateEngine = new GenerateEngineImpl();
-        this.packageProcessor = new PackageProcessorImpl();
-        this.annotationProcessor = new AnnotationProcessorImpl();
-    }
 
     /**
      * 构建model

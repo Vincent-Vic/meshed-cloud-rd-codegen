@@ -1,7 +1,5 @@
 package cn.meshed.cloud.rd.codegen;
 
-import cn.meshed.cloud.rd.codegen.AdapterMethod;
-import cn.meshed.cloud.rd.codegen.ObjectDefinition;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

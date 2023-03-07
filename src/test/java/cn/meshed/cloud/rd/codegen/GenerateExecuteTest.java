@@ -2,20 +2,12 @@ package cn.meshed.cloud.rd.codegen;
 
 import cn.meshed.cloud.rd.codegen.constant.ParameterType;
 import cn.meshed.cloud.rd.codegen.constant.RequestType;
-import cn.meshed.cloud.rd.codegen.impl.GenerateExecuteImpl;
-import cn.meshed.cloud.rd.codegen.model.JavaInterface;
-import cn.meshed.cloud.rd.codegen.model.JavaMethod;
-import cn.meshed.cloud.rd.codegen.model.JavaModel;
-import cn.meshed.cloud.rd.codegen.model.JavaParameter;
-import cn.meshed.cloud.rd.codegen.processor.impl.GenerateEngineImpl;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-
-import static org.junit.Assert.*;
 
 /**
  * <h1></h1>
@@ -29,7 +21,7 @@ public class GenerateExecuteTest {
 
     @Before
     public void init(){
-        generateExecute = new GenerateExecuteImpl();
+        generateExecute = TestBeanFactory.newGenerateExecute();
     }
 
 

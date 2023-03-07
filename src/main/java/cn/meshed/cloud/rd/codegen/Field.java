@@ -3,7 +3,6 @@ package cn.meshed.cloud.rd.codegen;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * <h1>字段</h1>

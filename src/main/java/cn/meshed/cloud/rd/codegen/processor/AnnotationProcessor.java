@@ -2,7 +2,6 @@ package cn.meshed.cloud.rd.codegen.processor;
 
 import cn.meshed.cloud.rd.codegen.Field;
 
-import java.util.List;
 import java.util.Set;
 
 /**

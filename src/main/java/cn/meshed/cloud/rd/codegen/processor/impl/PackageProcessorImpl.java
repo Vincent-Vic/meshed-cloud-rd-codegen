@@ -1,13 +1,9 @@
 package cn.meshed.cloud.rd.codegen.processor.impl;
 
-import cn.meshed.cloud.rd.codegen.Adapter;
 import cn.meshed.cloud.rd.codegen.AdapterMethod;
-import cn.meshed.cloud.rd.codegen.Field;
 import cn.meshed.cloud.rd.codegen.Method;
-import cn.meshed.cloud.rd.codegen.Model;
-import cn.meshed.cloud.rd.codegen.ObjectDefinition;
 import cn.meshed.cloud.rd.codegen.Parameter;
-import cn.meshed.cloud.rd.codegen.Rpc;
+import cn.meshed.cloud.rd.codegen.config.GenerateProperties;
 import cn.meshed.cloud.rd.codegen.model.JavaDefinition;
 import cn.meshed.cloud.rd.codegen.model.JavaField;
 import cn.meshed.cloud.rd.codegen.model.JavaInterface;
@@ -16,14 +12,12 @@ import cn.meshed.cloud.rd.codegen.model.JavaModel;
 import cn.meshed.cloud.rd.codegen.model.JavaParameter;
 import cn.meshed.cloud.rd.codegen.processor.PackageProcessor;
 import com.alibaba.cola.exception.SysException;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -32,30 +26,10 @@ import java.util.Set;
  * @author Vincent Vic
  * @version 1.0
  */
+@RequiredArgsConstructor
 public class PackageProcessorImpl implements PackageProcessor {
 
-    private final Map<String, String> BASE_PACKAGE_MAPPING = new HashMap<String, String>() {{
-        put("List", "java.util.List");
-        put("Set", "java.util.Set");
-        put("DTO", "com.alibaba.cola.dto.DTO");
-        put("Command", "com.alibaba.cola.dto.Command");
-        put("ClientObject", "com.alibaba.cola.dto.ClientObject");
-        put("Query", "com.alibaba.cola.dto.Query");
-        put("PageQuery", "com.alibaba.cola.dto.PageQuery");
-        put("MultiResponse", "com.alibaba.cola.dto.MultiResponse");
-        put("SingleResponse", "com.alibaba.cola.dto.SingleResponse");
-        put("PageResponse", "com.alibaba.cola.dto.PageResponse");
-        put("Response", "com.alibaba.cola.dto.Response");
-        put("NotBlank", "javax.validation.constraints.NotBlank");
-        put("NotNull", "javax.validation.constraints.NotNull");
-        put("NotEmpty", "javax.validation.constraints.NotEmpty");
-        put("Size", "javax.validation.constraints.Size");
-        put("Email", "javax.validation.constraints.Email");
-        put("Max", "javax.validation.constraints.Max");
-        put("Min", "javax.validation.constraints.Min");
-        put("Pattern", "javax.validation.constraints.Pattern");
-        put("ApiModelProperty", "io.swagger.annotations.ApiModelProperty");
-    }};
+    private final GenerateProperties generateProperties;
 
     /**
      * 通过java对象类型获取导入的包
@@ -65,10 +39,10 @@ public class PackageProcessorImpl implements PackageProcessor {
      */
     @Override
     public String getBasePackage(String objectType) {
-        if (StringUtils.isEmpty(objectType)) {
+        if (StringUtils.isEmpty(objectType) || generateProperties.getPackageMapping() == null) {
             return null;
         }
-        return BASE_PACKAGE_MAPPING.get(objectType);
+        return generateProperties.getPackageMapping().get(objectType);
     }
 
     /**
