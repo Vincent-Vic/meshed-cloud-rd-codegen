@@ -1,8 +1,14 @@
 package cn.meshed.cloud.rd.codegen.processor;
 
+import cn.meshed.cloud.rd.codegen.Adapter;
+import cn.meshed.cloud.rd.codegen.AdapterMethod;
+import cn.meshed.cloud.rd.codegen.Method;
 import cn.meshed.cloud.rd.codegen.Model;
+import cn.meshed.cloud.rd.codegen.Rpc;
+import cn.meshed.cloud.rd.codegen.model.JavaInterface;
 import cn.meshed.cloud.rd.codegen.model.JavaModel;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -28,4 +34,29 @@ public interface PackageProcessor {
      * @return 全部所需包列表
      */
     Set<String> scanModelPackage(JavaModel javaModel);
+
+
+    /**
+     * 扫描Java接口维度包
+     * @param javaInterface 接口
+     * @return 接口维度所需包列表
+     */
+    Set<String> scanJavaInterfacePackage(JavaInterface javaInterface);
+
+    /**
+     * 扫描方法中的特定的依赖包
+     *
+     * @param methods 方法列表
+     * @return 业务所需包列表
+     */
+    Set<String> scanMethodPackage(List<Method> methods);
+
+    /**
+     * 扫描方法中的特定的依赖包
+     *
+     * @param methods 方法列表
+     * @return 业务所需包列表
+     */
+    Set<String> scanAdapterMethodPackage(List<AdapterMethod> methods);
+
 }

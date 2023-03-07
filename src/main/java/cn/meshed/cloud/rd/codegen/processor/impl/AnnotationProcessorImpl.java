@@ -195,8 +195,4 @@ public class AnnotationProcessorImpl implements AnnotationProcessor {
         return pattern.matcher(String.valueOf(str)).matches();
     }
 
-    public static void main(String[] args) {
-        Map<String, Map<String, Object>> map = JSONUtil.toBean("{\"Pattern\":{\"regexp\":\"String\",\"message\":\"String\"},\"Size\":{\"min\": 22,\"max\":\"Integer\",\"message\":\"String\"},\"Max\":{\"value\":\"Integer\",\"message\":\"String\"},\"Min\":{\"value\":\"Integer\",\"message\":\"String\"},\"Email\":null}", Map.class);
-        System.out.println(map);
-    }
 }

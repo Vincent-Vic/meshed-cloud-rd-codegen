@@ -19,6 +19,11 @@ public interface Constant {
     String ANNOTATION_PARAMETER_FORMAT = "@%s(%s)";
 
     /**
+     * 带参数注解格式
+     */
+    String ANNOTATION_SIMPLE_PARAMETER_FORMAT = "@%s(\"%s\")";
+
+    /**
      * 带一个参数注解格式
      */
     String ANNOTATION_SINGLE_PARAMETER_FORMAT = "@%s(%s=%s)";
@@ -27,6 +32,11 @@ public interface Constant {
      * 参数格式
      */
     String PARAMETER_FORMAT = "%s=%s";
+
+    /**
+     * 泛型格式
+     */
+    String GENERIC_FORMAT = "%s<%s>";
 
     /**
      * 消息

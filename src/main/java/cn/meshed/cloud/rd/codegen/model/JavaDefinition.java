@@ -2,7 +2,10 @@ package cn.meshed.cloud.rd.codegen.model;
 
 import lombok.Builder;
 import lombok.Data;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -54,6 +57,32 @@ public class JavaDefinition {
      * 详情
      */
     private String description;
+
+    public JavaDefinition() {
+        this.imports = new HashSet<>();
+    }
+
+    /**
+     * 添加导入
+     *
+     * @param importName 导入包名
+     */
+    public void addImport(String importName) {
+        if (StringUtils.isNotBlank(importName)) {
+            this.imports.add(importName);
+        }
+    }
+
+    /**
+     * 批量导入
+     *
+     * @param imports 导入包名列表
+     */
+    public void addImports(Set<String> imports) {
+        if (CollectionUtils.isNotEmpty(imports)) {
+            this.imports.addAll(imports);
+        }
+    }
 
 
 }

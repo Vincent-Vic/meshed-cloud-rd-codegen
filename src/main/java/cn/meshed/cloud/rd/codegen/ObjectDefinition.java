@@ -72,7 +72,7 @@ public class ObjectDefinition {
      */
     public void addImport(String importName){
         if (StringUtils.isNotBlank(importName)){
-            imports.add(importName);
+            this.imports.add(importName);
         }
     }
 
@@ -81,9 +81,9 @@ public class ObjectDefinition {
      *
      * @param importNames 导入包列表
      */
-    public void addImport(List<String> importNames){
+    public void addImport(Set<String> importNames){
         if (CollectionUtils.isNotEmpty(importNames)){
-            imports.addAll(importNames);
+            this.imports.addAll(importNames);
         }
     }
 
