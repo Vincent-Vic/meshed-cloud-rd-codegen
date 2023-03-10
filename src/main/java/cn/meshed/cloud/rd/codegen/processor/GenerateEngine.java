@@ -3,6 +3,8 @@ package cn.meshed.cloud.rd.codegen.processor;
 import cn.meshed.cloud.rd.codegen.model.JavaDefinition;
 import com.alibaba.cola.exception.SysException;
 
+import java.util.Map;
+
 /**
  * <h1>生成引擎</h1>
  *

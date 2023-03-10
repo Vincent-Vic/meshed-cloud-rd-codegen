@@ -3,6 +3,7 @@ package cn.meshed.cloud.rd.codegen;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * <h1>字段</h1>
@@ -11,7 +12,7 @@ import java.io.Serializable;
  * @version 1.0
  */
 @Data
-public class Field implements Serializable {
+public class ObjectField implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -50,4 +51,20 @@ public class Field implements Serializable {
      */
     private boolean nonNull;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ObjectField)) {
+            return false;
+        }
+        ObjectField that = (ObjectField) o;
+        return getName().equals(that.getName()) && getType().equals(that.getType()) && Objects.equals(getGeneric(), that.getGeneric());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getType(), getGeneric());
+    }
 }

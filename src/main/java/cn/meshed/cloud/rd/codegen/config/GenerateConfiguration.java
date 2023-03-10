@@ -1,7 +1,7 @@
 package cn.meshed.cloud.rd.codegen.config;
 
-import cn.meshed.cloud.rd.codegen.GenerateExecute;
-import cn.meshed.cloud.rd.codegen.impl.GenerateExecuteImpl;
+import cn.meshed.cloud.rd.codegen.GenerateClassExecute;
+import cn.meshed.cloud.rd.codegen.impl.GenerateClassExecuteImpl;
 import cn.meshed.cloud.rd.codegen.processor.AnnotationProcessor;
 import cn.meshed.cloud.rd.codegen.processor.GenerateEngine;
 import cn.meshed.cloud.rd.codegen.processor.PackageProcessor;
@@ -22,7 +22,7 @@ public class GenerateConfiguration {
     private final PackageProcessor packageProcessor;
 
     @Bean
-    public GenerateExecute generateExecute(){
-        return new GenerateExecuteImpl(generateEngine,packageProcessor,annotationProcessor);
+    public GenerateClassExecute generateExecute(){
+        return new GenerateClassExecuteImpl(generateEngine,packageProcessor,annotationProcessor);
     }
 }

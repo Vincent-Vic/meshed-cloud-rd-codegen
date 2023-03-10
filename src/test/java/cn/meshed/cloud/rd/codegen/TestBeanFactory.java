@@ -2,7 +2,7 @@ package cn.meshed.cloud.rd.codegen;
 
 import cn.meshed.cloud.rd.codegen.config.GenerateProperties;
 import cn.meshed.cloud.rd.codegen.factory.TemplateFactory;
-import cn.meshed.cloud.rd.codegen.impl.GenerateExecuteImpl;
+import cn.meshed.cloud.rd.codegen.impl.GenerateClassExecuteImpl;
 import cn.meshed.cloud.rd.codegen.processor.AnnotationProcessor;
 import cn.meshed.cloud.rd.codegen.processor.GenerateEngine;
 import cn.meshed.cloud.rd.codegen.processor.PackageProcessor;
@@ -87,7 +87,7 @@ public class TestBeanFactory {
         return new PackageProcessorImpl(newGenerateProperties());
     }
 
-    public static GenerateExecute newGenerateExecute(){
-        return new GenerateExecuteImpl(newGenerateEngine(),newPackageProcessor(),newAnnotationProcessor());
+    public static GenerateClassExecute newGenerateExecute(){
+        return new GenerateClassExecuteImpl(newGenerateEngine(),newPackageProcessor(),newAnnotationProcessor());
     }
 }

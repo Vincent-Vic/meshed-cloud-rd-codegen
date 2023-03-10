@@ -1,7 +1,7 @@
 package cn.meshed.cloud.rd.codegen.processor.impl;
 
 import cn.hutool.json.JSONUtil;
-import cn.meshed.cloud.rd.codegen.Field;
+import cn.meshed.cloud.rd.codegen.ObjectField;
 import cn.meshed.cloud.rd.codegen.config.GenerateProperties;
 import cn.meshed.cloud.rd.codegen.processor.AnnotationProcessor;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -35,27 +36,27 @@ public class AnnotationProcessorImpl implements AnnotationProcessor {
     /**
      * 生成字段注解
      *
-     * @param field 字段
+     * @param objectField 字段
      * @return 注解列表
      */
     @Override
-    public Set<String> generateFieldAnnotation(Field field) {
+    public Set<String> generateFieldAnnotation(ObjectField objectField) {
         Set<String> annotations = new HashSet<>();
-        String explain = StringUtils.isNotBlank(field.getExplain()) ? field.getExplain() : field.getName();
-        nonNullAnnotations(field, annotations, explain);
+        String explain = StringUtils.isNotBlank(objectField.getExplain()) ? objectField.getExplain() : objectField.getName();
+        nonNullAnnotations(objectField, annotations, explain);
         //解析json
-        handleAnnotationJson(field, annotations);
+        handleAnnotationJson(objectField, annotations);
         return annotations;
     }
 
     /**
      *
-     * @param field
+     * @param objectField
      * @param annotations
      */
-    private void handleAnnotationJson(Field field, Set<String> annotations) {
-        if (StringUtils.isNotBlank(field.getAnnotationJson())) {
-            Map<String, Map<String, Object>> annotationMap = JSONUtil.toBean(field.getAnnotationJson(), Map.class);
+    private void handleAnnotationJson(ObjectField objectField, Set<String> annotations) {
+        if (StringUtils.isNotBlank(objectField.getAnnotationJson())) {
+            Map<String, Map<String, Object>> annotationMap = JSONUtil.toBean(objectField.getAnnotationJson(), Map.class);
             if (!annotationMap.isEmpty()) {
 
                 Map<String, Map<String, String>> annotationRule = getAnnotationRule();
@@ -63,30 +64,30 @@ public class AnnotationProcessorImpl implements AnnotationProcessor {
                 if (annotationRule == null || annotationRule.isEmpty()){
                     return;
                 }
-                for (Map.Entry<String, Map<String, Object>> entry : annotationMap.entrySet()) {
-
+                annotationMap.entrySet().stream().filter(Objects::nonNull).forEach(entry -> {
                     Map<String, Object> args = new HashMap<>();
                     String annotationName = entry.getKey();
                     //获取规则map
                     Map<String, String> annotationRuleMap = annotationRule.get(annotationName);
-                    if (annotationRuleMap == null){
-                        continue;
+                    if (annotationRuleMap == null || annotationRuleMap.isEmpty()){
+                        return;
                     }
                     Map<String, Object> map = null;
                     try {
                         //通过规则匹配取值
                         map = entry.getValue();
                     } catch (Exception e){
-                        continue;
+                        return;
                     }
                     if (map == null){
-                        continue;
+                        return;
                     }
-                    for (Map.Entry<String, String> objectEntry : annotationRuleMap.entrySet()) {
-                        Object value = map.get(objectEntry.getKey());
+                    Map<String, Object> finalMap = map;
+                    annotationRuleMap.entrySet().stream().filter(Objects::nonNull).forEach(objectEntry ->{
+                        Object value = finalMap.get(objectEntry.getKey());
                         //规则中未取到值则放弃此参数
                         if (value == null) {
-                            continue;
+                            return;
                         }
                         //存在值判断类型是否匹配
                         if (STRING.equals(objectEntry.getValue()) && value instanceof String) {
@@ -94,9 +95,9 @@ public class AnnotationProcessorImpl implements AnnotationProcessor {
                         } else if (INTEGER.equals(objectEntry.getValue()) && isInteger(value)){
                             args.put(objectEntry.getKey(),value);
                         }
-                    }
+                    });
                     annotations.add(getAnnotation(annotationName,args));
-                }
+                });
             }
         }
     }
@@ -104,16 +105,16 @@ public class AnnotationProcessorImpl implements AnnotationProcessor {
     /**
      * 非空注解
      *
-     * @param field       字段
+     * @param objectField       字段
      * @param annotations 注解列表
      * @param explain     描述
      */
-    private void nonNullAnnotations(Field field, Set<String> annotations, String explain) {
-        if (field.isNonNull()) {
+    private void nonNullAnnotations(ObjectField objectField, Set<String> annotations, String explain) {
+        if (objectField.isNonNull()) {
             String tip = "\""+explain + "不能为空\"";
             //泛型优先处理
-            if (StringUtils.isNotBlank(field.getGeneric())) {
-                switch (field.getGeneric()) {
+            if (StringUtils.isNotBlank(objectField.getGeneric())) {
+                switch (objectField.getGeneric()) {
                     case "List":
                     case "Set":
                         annotations.add(getAnnotation("NotEmpty", MESSAGE, tip));
@@ -121,7 +122,7 @@ public class AnnotationProcessorImpl implements AnnotationProcessor {
                     default:
                         //其他暂不支持
                 }
-            } else if (STRING.equals(field.getType())) {
+            } else if (STRING.equals(objectField.getType())) {
                 annotations.add(getAnnotation("NotBlank", MESSAGE, tip));
             } else {
                 annotations.add(getAnnotation("NotNull", MESSAGE, tip));
@@ -132,13 +133,13 @@ public class AnnotationProcessorImpl implements AnnotationProcessor {
     /**
      * 生成模型字段注解
      *
-     * @param field 字段
+     * @param objectField 字段
      * @return 注解列表
      */
     @Override
-    public Set<String> generateModelFieldAnnotation(Field field) {
-        Set<String> annotations = generateFieldAnnotation(field);
-        String explain = StringUtils.isNotBlank(field.getExplain()) ? field.getExplain() : field.getName();
+    public Set<String> generateModelFieldAnnotation(ObjectField objectField) {
+        Set<String> annotations = generateFieldAnnotation(objectField);
+        String explain = StringUtils.isNotBlank(objectField.getExplain()) ? objectField.getExplain() : objectField.getName();
         annotations.add(getAnnotation("ApiModelProperty", VALUE, "\""+explain+"\""));
         return annotations;
     }

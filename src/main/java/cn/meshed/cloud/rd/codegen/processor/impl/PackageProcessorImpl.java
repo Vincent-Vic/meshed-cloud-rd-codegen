@@ -1,15 +1,11 @@
 package cn.meshed.cloud.rd.codegen.processor.impl;
 
 import cn.meshed.cloud.rd.codegen.AdapterMethod;
-import cn.meshed.cloud.rd.codegen.Method;
-import cn.meshed.cloud.rd.codegen.Parameter;
+import cn.meshed.cloud.rd.codegen.ObjectMethod;
 import cn.meshed.cloud.rd.codegen.config.GenerateProperties;
 import cn.meshed.cloud.rd.codegen.model.JavaDefinition;
-import cn.meshed.cloud.rd.codegen.model.JavaField;
 import cn.meshed.cloud.rd.codegen.model.JavaInterface;
-import cn.meshed.cloud.rd.codegen.model.JavaMethod;
 import cn.meshed.cloud.rd.codegen.model.JavaModel;
-import cn.meshed.cloud.rd.codegen.model.JavaParameter;
 import cn.meshed.cloud.rd.codegen.processor.PackageProcessor;
 import com.alibaba.cola.exception.SysException;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +13,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashSet;
-import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -56,7 +52,7 @@ public class PackageProcessorImpl implements PackageProcessor {
         Set<String> modelPackage = scanObjectPackage(javaModel);
         //字段扫描
         if (CollectionUtils.isNotEmpty(javaModel.getFields())) {
-            for (JavaField javaField : javaModel.getFields()) {
+            javaModel.getFields().stream().filter(Objects::nonNull).forEach(javaField -> {
                 //SET 以及避免了重复，对于重复字段不影响
                 //添加泛型类型的包
                 addSet(modelPackage, getBasePackage(javaField.getGeneric()));
@@ -67,7 +63,7 @@ public class PackageProcessorImpl implements PackageProcessor {
                 if (CollectionUtils.isNotEmpty(annotationPackages)) {
                     modelPackage.addAll(annotationPackages);
                 }
-            }
+            });
         }
         return modelPackage;
     }
@@ -83,19 +79,21 @@ public class PackageProcessorImpl implements PackageProcessor {
     public Set<String> scanJavaInterfacePackage(JavaInterface javaInterface) {
         Set<String> interfacePackages = scanObjectPackage(javaInterface);
         if (CollectionUtils.isNotEmpty(javaInterface.getMethods())) {
-            for (JavaMethod method : javaInterface.getMethods()) {
+            javaInterface.getMethods().stream().filter(Objects::nonNull).forEach(method -> {
                 //方法扫描注解
                 Set<String> methodAnnotationPackages = scanAnnotation(method.getAnnotations());
                 if (CollectionUtils.isNotEmpty(methodAnnotationPackages)) {
                     interfacePackages.addAll(methodAnnotationPackages);
                 }
-                for (JavaParameter parameter : method.getParameters()) {
-                    Set<String> annotationPackages = scanAnnotation(parameter.getAnnotations());
-                    if (CollectionUtils.isNotEmpty(annotationPackages)) {
-                        interfacePackages.addAll(annotationPackages);
-                    }
+                if (CollectionUtils.isNotEmpty(method.getParameters())){
+                    method.getParameters().stream().filter(Objects::nonNull).forEach(parameter -> {
+                        Set<String> annotationPackages = scanAnnotation(parameter.getAnnotations());
+                        if (CollectionUtils.isNotEmpty(annotationPackages)) {
+                            interfacePackages.addAll(annotationPackages);
+                        }
+                    });
                 }
-            }
+            });
         }
 
         return interfacePackages;
@@ -108,18 +106,19 @@ public class PackageProcessorImpl implements PackageProcessor {
      * @return 方法中导入的包
      */
     @Override
-    public Set<String> scanMethodPackage(List<Method> methods) {
+    public Set<String> scanMethodPackage(Set<ObjectMethod> methods) {
         Set<String> packsges = new HashSet<>();
         if (CollectionUtils.isNotEmpty(methods)) {
-            for (Method method : methods) {
-
-                for (Parameter parameter : method.getParameters()) {
-                    addSet(packsges, parameter.getParameterType().getImportName());
+            methods.stream().filter(Objects::nonNull).forEach(method -> {
+                if (CollectionUtils.isNotEmpty(method.getParameters())){
+                    method.getParameters().stream().filter(Objects::nonNull)
+                            .forEach(objectParameter ->
+                                    addSet(packsges, objectParameter.getParameterType().getImportName()));
                 }
-                addSet(packsges, getBasePackage(method.getResponse().getGeneric()));
-                addSet(packsges, getBasePackage(method.getResponse().getSubGeneric()));
-                addSet(packsges, getBasePackage(method.getResponse().getDataType()));
-            }
+                addSet(packsges, getBasePackage(method.getObjectResponse().getGeneric()));
+                addSet(packsges, getBasePackage(method.getObjectResponse().getSubGeneric()));
+                addSet(packsges, getBasePackage(method.getObjectResponse().getDataType()));
+            });
         }
         return packsges;
     }
@@ -131,18 +130,22 @@ public class PackageProcessorImpl implements PackageProcessor {
      * @return 方法中导入的包
      */
     @Override
-    public Set<String> scanAdapterMethodPackage(List<AdapterMethod> methods) {
+    public Set<String> scanAdapterMethodPackage(Set<AdapterMethod> methods) {
         Set<String> packsges = new HashSet<>();
         if (CollectionUtils.isNotEmpty(methods)) {
-            for (AdapterMethod method : methods) {
-                addSet(packsges, method.getRequestType().getImportName());
-                for (Parameter parameter : method.getParameters()) {
-                    addSet(packsges, parameter.getParameterType().getImportName());
+            methods.stream().filter(Objects::nonNull).forEach(method -> {
+                if (CollectionUtils.isNotEmpty(method.getParameters())){
+                    method.getParameters().stream()
+                            .filter(Objects::nonNull)
+                            .forEach( objectParameter ->
+                                    addSet(packsges, objectParameter.getParameterType().getImportName()));
                 }
-                addSet(packsges, getBasePackage(method.getResponse().getGeneric()));
-                addSet(packsges, getBasePackage(method.getResponse().getSubGeneric()));
-                addSet(packsges, getBasePackage(method.getResponse().getDataType()));
-            }
+                addSet(packsges, method.getRequestType().getImportName());
+
+                addSet(packsges, getBasePackage(method.getObjectResponse().getGeneric()));
+                addSet(packsges, getBasePackage(method.getObjectResponse().getSubGeneric()));
+                addSet(packsges, getBasePackage(method.getObjectResponse().getDataType()));
+            });
         }
         return packsges;
     }
@@ -155,12 +158,12 @@ public class PackageProcessorImpl implements PackageProcessor {
     private Set<String> scanAnnotation(Set<String> annotations) {
         Set<String> packages = new HashSet<>();
         if (CollectionUtils.isNotEmpty(annotations)) {
-            for (String annotation : annotations) {
+            annotations.stream().filter(Objects::nonNull).forEach(annotation ->{
                 int index = annotation.indexOf("(");
                 String annotationName = annotation.substring(0, index < 0 ? annotation.length(): index)
                         .replaceAll("@", "");
                 addSet(packages, getBasePackage(annotationName));
-            }
+            });
         }
         return packages;
     }

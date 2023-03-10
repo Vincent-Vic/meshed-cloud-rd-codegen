@@ -16,8 +16,8 @@ import ${import};
 * <h1>${explain!className}</h1>
 * <p>${description}</p>
 *
-* @author ${author}
-* @version ${version}
+* @author ${author!'Meshed Cloud RD'}
+* @version ${version!'1.0.0'}
 */
 @RequestMapping("${uri!'/'+className}")
 public interface ${className} <#if superClass??>extends ${superClass} </#if>{
@@ -26,10 +26,10 @@ public interface ${className} <#if superClass??>extends ${superClass} </#if>{
     <#list methods as method>
     /**
     * <h2>${method.explain!method.name}</h2>
-    *
-<#list method.parameters as parameter>
+    * ${method.description!''}
+<#if method.parameters??><#list method.parameters as parameter>
     * @param ${parameter.name} ${parameter.explain!parameter.name}
-</#list>
+</#list></#if>
     * @return {@link ${method.response}}
     */
     @ApiOperation(value = "${method.explain!method.name}")
@@ -38,7 +38,7 @@ public interface ${className} <#if superClass??>extends ${superClass} </#if>{
     ${annotation}
     </#list>
 </#if>
-    ${method.response} ${method.name}(<#assign index = 0><#list method.parameters as parameter><#if index != 0>, </#if><#assign index = index+1>@ApiParam("${parameter.explain!parameter.name}") @Valid <#if parameter.annotations??><#list parameter.annotations as annotation>${annotation} </#list></#if>${parameter.type} ${parameter.name}</#list>);
+    ${method.response} ${method.name}(<#if method.parameters??><#assign index = 0><#list method.parameters as parameter><#if index != 0>, </#if><#assign index = index+1>@ApiParam("${parameter.explain!parameter.name}") @Valid <#if parameter.annotations??><#list parameter.annotations as annotation>${annotation} </#list></#if>${parameter.type} ${parameter.name}</#list></#if>);
     </#list>
 </#if>
 

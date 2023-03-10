@@ -18,7 +18,7 @@ import static cn.meshed.cloud.rd.codegen.constant.Constant.ANNOTATION_SIMPLE_PAR
  */
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class AdapterMethod extends Method {
+public class AdapterMethod extends ObjectMethod {
 
     private String uri;
 
@@ -39,4 +39,5 @@ public class AdapterMethod extends Method {
         }
         return super.getAnnotations();
     }
+
 }

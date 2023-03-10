@@ -12,10 +12,10 @@ import ${import};
 
 /**
 * <h1>${explain!className}</h1>
-* <p>${description}</p>
+* <p>${description!''}</p>
 *
-* @author ${author}
-* @version ${version}
+* @author ${author!'Meshed Cloud RD'}
+* @version ${version!'1.0.0'}
 */
 @EqualsAndHashCode(callSuper = false)
 @Data

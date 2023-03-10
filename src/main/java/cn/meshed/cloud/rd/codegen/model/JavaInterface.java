@@ -17,4 +17,9 @@ public class JavaInterface extends JavaDefinition{
      * 方法列表
      */
     private List<JavaMethod> methods;
+
+    /**
+     * uri
+     */
+    private String uri;
 }

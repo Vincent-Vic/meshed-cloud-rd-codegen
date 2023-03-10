@@ -3,7 +3,7 @@ package cn.meshed.cloud.rd.codegen;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * <h1></h1>
@@ -13,12 +13,11 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class Model extends ObjectDefinition {
+public class ObjectModel extends ObjectDefinition {
 
     /**
      * 字段
      */
-    private List<Field> fields;
-
+    private Set<ObjectField> fields;
 
 }

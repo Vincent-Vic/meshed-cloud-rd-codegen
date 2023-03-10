@@ -1,6 +1,6 @@
 package cn.meshed.cloud.rd.codegen.processor;
 
-import cn.meshed.cloud.rd.codegen.Field;
+import cn.meshed.cloud.rd.codegen.ObjectField;
 
 import java.util.Set;
 
@@ -15,16 +15,16 @@ public interface AnnotationProcessor {
     /**
      * 生成字段注解
      *
-     * @param field 字段
+     * @param objectField 字段
      * @return 注解列表
      */
-    Set<String> generateFieldAnnotation(Field field);
+    Set<String> generateFieldAnnotation(ObjectField objectField);
 
     /**
      * 生成模型字段注解
      *
-     * @param field 字段
+     * @param objectField 字段
      * @return 注解列表
      */
-    Set<String> generateModelFieldAnnotation(Field field);
+    Set<String> generateModelFieldAnnotation(ObjectField objectField);
 }

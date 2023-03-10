@@ -3,7 +3,7 @@ package cn.meshed.cloud.rd.codegen;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * <h1>适配器数据</h1>
@@ -23,5 +23,5 @@ public class Adapter extends ObjectDefinition {
     /**
      * 适配器方法列表
      */
-    private List<AdapterMethod> methods;
+    private Set<AdapterMethod> methods;
 }

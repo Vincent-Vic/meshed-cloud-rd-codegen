@@ -3,7 +3,7 @@ package cn.meshed.cloud.rd.codegen.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * <h1>模型</h1>
@@ -19,7 +19,7 @@ public class JavaModel extends JavaDefinition {
     /**
      * 字段
      */
-    private List<JavaField> fields;
+    private Set<JavaField> fields;
 
 
 

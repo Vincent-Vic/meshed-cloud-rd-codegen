@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.Getter;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import static cn.meshed.cloud.rd.codegen.constant.Constant.ANNOTATION_FORMAT;
@@ -17,7 +18,7 @@ import static cn.meshed.cloud.rd.codegen.constant.Constant.ANNOTATION_FORMAT;
  * @version 1.0
  */
 @Data
-public class Parameter {
+public class ObjectParameter {
 
     /**
      * 字段类型
@@ -45,7 +46,7 @@ public class Parameter {
      */
     private String explain;
 
-    public Parameter() {
+    public ObjectParameter() {
         this.annotations = new HashSet<>();
     }
 
@@ -72,5 +73,22 @@ public class Parameter {
             addAnnotation(String.format(ANNOTATION_FORMAT,this.parameterType.getAnnotation()));
         }
         return this.annotations;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ObjectParameter)) {
+            return false;
+        }
+        ObjectParameter that = (ObjectParameter) o;
+        return getType().equals(that.getType()) && getName().equals(that.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getType(), getName());
     }
 }

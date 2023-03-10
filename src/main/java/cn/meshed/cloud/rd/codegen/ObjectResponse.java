@@ -14,7 +14,7 @@ import static cn.meshed.cloud.rd.codegen.constant.Constant.GENERIC_FORMAT;
  */
 @Getter
 @Setter
-public class Response {
+public class ObjectResponse {
 
     /**
      * 返回数据类型
@@ -50,8 +50,8 @@ public class Response {
         //前面封装类型存在和第一泛型存在
         if (StringUtils.isNotBlank(type) && StringUtils.isNotBlank(generic)){
             type = String.format(GENERIC_FORMAT,generic,type);
-        } else if (StringUtils.isNotBlank(subGeneric)){
-            // 没有数据类型，仅有第二泛型
+        } else {
+            // 没有数据类型，仅有第一泛型
             type = generic;
         }
         return type;

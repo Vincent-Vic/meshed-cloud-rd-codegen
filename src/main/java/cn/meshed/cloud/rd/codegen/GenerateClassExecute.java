@@ -6,15 +6,15 @@ package cn.meshed.cloud.rd.codegen;
  * @author Vincent Vic
  * @version 1.0
  */
-public interface GenerateExecute {
+public interface GenerateClassExecute {
 
     /**
      * 构建model
      *
-     * @param model 模型数据
+     * @param objectModel 模型数据
      * @return 代码
      */
-    String buildModel(Model model);
+    String buildModel(ObjectModel objectModel);
 
     /**
      * 构建 Adapter 接口

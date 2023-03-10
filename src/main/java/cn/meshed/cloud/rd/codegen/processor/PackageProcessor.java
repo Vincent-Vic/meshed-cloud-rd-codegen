@@ -1,11 +1,10 @@
 package cn.meshed.cloud.rd.codegen.processor;
 
 import cn.meshed.cloud.rd.codegen.AdapterMethod;
-import cn.meshed.cloud.rd.codegen.Method;
+import cn.meshed.cloud.rd.codegen.ObjectMethod;
 import cn.meshed.cloud.rd.codegen.model.JavaInterface;
 import cn.meshed.cloud.rd.codegen.model.JavaModel;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -46,7 +45,7 @@ public interface PackageProcessor {
      * @param methods 方法列表
      * @return 业务所需包列表
      */
-    Set<String> scanMethodPackage(List<Method> methods);
+    Set<String> scanMethodPackage(Set<ObjectMethod> methods);
 
     /**
      * 扫描方法中的特定的依赖包
@@ -54,6 +53,6 @@ public interface PackageProcessor {
      * @param methods 方法列表
      * @return 业务所需包列表
      */
-    Set<String> scanAdapterMethodPackage(List<AdapterMethod> methods);
+    Set<String> scanAdapterMethodPackage(Set<AdapterMethod> methods);
 
 }
