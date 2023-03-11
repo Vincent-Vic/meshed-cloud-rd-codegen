@@ -1,8 +1,14 @@
 package cn.meshed.cloud.rd.codegen.model;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
+import org.apache.commons.collections4.CollectionUtils;
 
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * <h1>JAVA 接口</h1>
@@ -16,10 +22,18 @@ public class JavaInterface extends JavaDefinition{
     /**
      * 方法列表
      */
-    private List<JavaMethod> methods;
+    @Setter(AccessLevel.NONE)
+    private Set<JavaMethod> methods;
 
     /**
      * uri
      */
     private String uri;
+
+    public void setMethods(Set<JavaMethod> methods) {
+        if (CollectionUtils.isNotEmpty(methods)){
+            this.methods = methods.stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new));
+        }
+    }
+
 }

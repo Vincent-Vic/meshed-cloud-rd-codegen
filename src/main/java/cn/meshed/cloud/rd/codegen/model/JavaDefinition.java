@@ -7,6 +7,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -95,5 +96,22 @@ public class JavaDefinition {
         if (this.packageName.endsWith(this.className)){
             this.packageName = this.packageName.replace("."+this.className,"");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof JavaDefinition)) {
+            return false;
+        }
+        JavaDefinition that = (JavaDefinition) o;
+        return getPackageName().equals(that.getPackageName()) && getClassName().equals(that.getClassName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPackageName(), getClassName());
     }
 }

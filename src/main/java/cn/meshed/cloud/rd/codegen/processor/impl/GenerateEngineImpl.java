@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.StringWriter;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * <h1>生成核心类</h1>
@@ -32,7 +33,7 @@ public class GenerateEngineImpl implements GenerateEngine {
      */
     @Override
     public String generate(String templateName, JavaDefinition data) throws SysException {
-        Map dataMap = JSONUtil.toBean(JSONUtil.toJsonStr(data), Map.class);
+        TreeMap<String,Object> dataMap = JSONUtil.toBean(JSONUtil.toJsonStr(data), TreeMap.class);
         try {
             Template template = templateFactory.getTemplate(String.format("%s.ftl",templateName));
             StringWriter sw = new StringWriter();

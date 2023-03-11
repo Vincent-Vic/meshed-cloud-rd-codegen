@@ -17,7 +17,6 @@ import cn.meshed.cloud.rd.codegen.model.JavaParameter;
 import cn.meshed.cloud.rd.codegen.processor.AnnotationProcessor;
 import cn.meshed.cloud.rd.codegen.processor.GenerateEngine;
 import cn.meshed.cloud.rd.codegen.processor.PackageProcessor;
-import cn.meshed.cloud.rd.codegen.utils.JsonUtils;
 import cn.meshed.cloud.utils.AssertUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
@@ -84,8 +83,8 @@ public class GenerateClassExecuteImpl implements GenerateClassExecute {
         checkAdapter(adapter);
         JavaInterface javaInterface = getBaseJavaInterface(adapter);
         if (CollectionUtils.isNotEmpty(adapter.getMethods())) {
-            List<JavaMethod> methods = adapter.getMethods().stream().filter(Objects::nonNull)
-                    .map(this::buildMethodJavaMethod).collect(Collectors.toList());
+            Set<JavaMethod> methods = adapter.getMethods().stream().filter(Objects::nonNull)
+                    .map(this::buildMethodJavaMethod).collect(Collectors.toSet());
             javaInterface.setMethods(methods);
         }
         javaInterface.setUri(adapter.getUri());
@@ -117,8 +116,8 @@ public class GenerateClassExecuteImpl implements GenerateClassExecute {
         checkRpc(rpc);
         JavaInterface javaInterface = getBaseJavaInterface(rpc);
         if (CollectionUtils.isNotEmpty(rpc.getMethods())) {
-            List<JavaMethod> methods = rpc.getMethods().stream().filter(Objects::nonNull)
-                    .map(this::buildMethodJavaMethod).collect(Collectors.toList());
+            Set<JavaMethod> methods = rpc.getMethods().stream().filter(Objects::nonNull)
+                    .map(this::buildMethodJavaMethod).collect(Collectors.toSet());
             javaInterface.setMethods(methods);
         }
         javaInterface.setImports(packageProcessor.scanJavaInterfacePackage(javaInterface));
@@ -198,6 +197,7 @@ public class GenerateClassExecuteImpl implements GenerateClassExecute {
         javaParameter.setName(objectParameter.getName());
         javaParameter.setType(objectParameter.getType());
         javaParameter.setExplain(objectParameter.getExplain());
+        javaParameter.verification();
         return javaParameter;
     }
 
