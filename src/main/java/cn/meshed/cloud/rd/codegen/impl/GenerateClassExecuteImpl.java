@@ -166,6 +166,7 @@ public class GenerateClassExecuteImpl implements GenerateClassExecute {
         javaMethod.setResponse(method.getResponseData());
         javaMethod.setName(method.getName());
         javaMethod.setAnnotations(method.getAnnotations());
+        javaMethod.verification();
         return javaMethod;
     }
 
@@ -215,6 +216,7 @@ public class GenerateClassExecuteImpl implements GenerateClassExecute {
         javaInterface.setImports(objectDefinition.getImports());
         javaInterface.setVersion(objectDefinition.getVersion());
         javaInterface.setExplain(objectDefinition.getExplain());
+        javaInterface.verification();
         return javaInterface;
     }
 
@@ -245,6 +247,7 @@ public class GenerateClassExecuteImpl implements GenerateClassExecute {
         javaField.setType(objectField.getType());
         //生成注解
         javaField.setAnnotations(annotationProcessor.generateModelFieldAnnotation(objectField));
+        javaField.verification();
         return javaField;
     }
 
@@ -264,6 +267,7 @@ public class GenerateClassExecuteImpl implements GenerateClassExecute {
         javaModel.setPackageName(objectModel.getPackageName());
         javaModel.setVersion(objectModel.getVersion());
         javaModel.setImports(objectModel.getImports());
+        javaModel.verification();
         return javaModel;
     }
 }

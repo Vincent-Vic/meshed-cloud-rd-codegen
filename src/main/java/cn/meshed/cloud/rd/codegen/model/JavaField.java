@@ -1,6 +1,8 @@
 package cn.meshed.cloud.rd.codegen.model;
 
+import cn.meshed.cloud.utils.AssertUtils;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -41,4 +43,12 @@ public class JavaField implements Serializable {
      */
     private Set<String> annotations;
 
+    /**
+     * 校验
+     */
+    public void verification() {
+        //包名中含类名设施处理特殊处理
+        AssertUtils.isTrue(StringUtils.isNotBlank(this.type),"类型不能为空");
+        AssertUtils.isTrue(StringUtils.isNotBlank(this.name),"名称不能为空");
+    }
 }

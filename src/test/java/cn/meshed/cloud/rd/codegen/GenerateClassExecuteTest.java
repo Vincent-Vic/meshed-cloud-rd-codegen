@@ -54,7 +54,7 @@ public class GenerateClassExecuteTest {
         adapter.setDescription("Test");
         adapter.setClassName("ProjectAdapter");
         adapter.setUri("/test");
-        adapter.setPackageName("cn.meshed.cloud.rd.project");
+        adapter.setPackageName("cn.meshed.cloud.rd.project.ProjectAdapter");
         adapter.addImport("org.junit.Test");
         adapter.setVersion("1.0.0");
         adapter.setExplain("测试");
