@@ -11,7 +11,7 @@ import java.util.Set;
  * @author Vincent Vic
  * @version 1.0
  */
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class ObjectModel extends ObjectDefinition {
 

@@ -16,7 +16,7 @@ import static cn.meshed.cloud.rd.codegen.constant.Constant.ANNOTATION_SIMPLE_PAR
  * @author Vincent Vic
  * @version 1.0
  */
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class AdapterMethod extends ObjectMethod {
 
