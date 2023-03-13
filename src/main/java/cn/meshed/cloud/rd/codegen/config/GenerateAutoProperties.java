@@ -6,14 +6,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.Map;
 
 /**
- * <h1></h1>
+ * <h1>构建配置信息</h1>
  *
  * @author Vincent Vic
  * @version 1.0
  */
 @ConfigurationProperties(prefix = "code.generate")
 @Data
-public class GenerateProperties {
+public class GenerateAutoProperties {
 
     private Map<String,String> packageMapping;
 

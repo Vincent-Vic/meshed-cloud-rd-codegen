@@ -20,8 +20,14 @@ import static cn.meshed.cloud.rd.codegen.constant.Constant.ANNOTATION_SIMPLE_PAR
 @Data
 public class AdapterMethod extends ObjectMethod {
 
+    /**
+     * uri
+     */
     private String uri;
 
+    /**
+     * 请求类型
+     */
     private RequestType requestType;
 
     /**

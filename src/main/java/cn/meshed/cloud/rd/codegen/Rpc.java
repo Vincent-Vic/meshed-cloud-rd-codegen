@@ -16,7 +16,7 @@ import java.util.Set;
 public class Rpc extends ObjectDefinition {
 
     /**
-     * 适配器方法列表
+     * 适配器方法列表 取保方法名称和参数组合不重复
      */
     private Set<ObjectMethod> methods;
 }

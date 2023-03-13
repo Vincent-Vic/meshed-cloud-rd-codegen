@@ -9,13 +9,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 
 /**
- * <h1></h1>
+ * <h1>构建执行器自动配置</h1>
  *
  * @author Vincent Vic
  * @version 1.0
  */
 @RequiredArgsConstructor
-public class GenerateConfiguration {
+public class GenerateAutoConfiguration {
 
     private final GenerateEngine generateEngine;
     private final AnnotationProcessor annotationProcessor;

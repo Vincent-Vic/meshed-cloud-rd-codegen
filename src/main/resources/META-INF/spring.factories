@@ -1,5 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-cn.meshed.cloud.rd.codegen.config.GenerateProperties,\
-cn.meshed.cloud.rd.codegen.config.TemplateConfiguration,\
-cn.meshed.cloud.rd.codegen.config.ProcessorConfiguration,\
-cn.meshed.cloud.rd.codegen.config.GenerateConfiguration
+cn.meshed.cloud.rd.codegen.config.GenerateAutoProperties,\
+cn.meshed.cloud.rd.codegen.config.TemplateAutoConfiguration,\
+cn.meshed.cloud.rd.codegen.config.ProcessorAutoConfiguration,\
+cn.meshed.cloud.rd.codegen.config.GenerateAutoConfiguration

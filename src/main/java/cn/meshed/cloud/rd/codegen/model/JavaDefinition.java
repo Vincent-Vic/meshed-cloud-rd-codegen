@@ -98,6 +98,12 @@ public class JavaDefinition {
         }
     }
 
+    /**
+     * 类名和包名唯一性定义
+     *
+     * @param o object
+     * @return boolean
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {

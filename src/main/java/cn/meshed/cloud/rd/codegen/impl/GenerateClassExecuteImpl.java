@@ -26,7 +26,10 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static cn.meshed.cloud.rd.codegen.constant.Constant.ADAPTER;
 import static cn.meshed.cloud.rd.codegen.constant.Constant.ANNOTATION_SIMPLE_PARAMETER_FORMAT;
+import static cn.meshed.cloud.rd.codegen.constant.Constant.MODEL;
+import static cn.meshed.cloud.rd.codegen.constant.Constant.RPC;
 
 /**
  * <h1>生成执行器</h1>
@@ -57,16 +60,21 @@ public class GenerateClassExecuteImpl implements GenerateClassExecute {
         //扫描包
         javaModel.setImports(packageProcessor.scanModelPackage(javaModel));
 
-        return generateEngine.generate("model", javaModel);
+        return generateEngine.generate(MODEL, javaModel);
     }
 
+    /**
+     * 校验模型
+     *
+     * @param objectModel 模型
+     */
     private void checkModel(ObjectModel objectModel) {
-        AssertUtils.isTrue(StringUtils.isNotBlank(objectModel.getPackageName()),"包名不能为空");
-        AssertUtils.isTrue(StringUtils.isNotBlank(objectModel.getClassName()),"类名不能为空");
-        if (CollectionUtils.isNotEmpty(objectModel.getFields())){
+        AssertUtils.isTrue(StringUtils.isNotBlank(objectModel.getPackageName()), "包名不能为空");
+        AssertUtils.isTrue(StringUtils.isNotBlank(objectModel.getClassName()), "类名不能为空");
+        if (CollectionUtils.isNotEmpty(objectModel.getFields())) {
             objectModel.getFields().stream().filter(Objects::nonNull).forEach(objectField -> {
-                AssertUtils.isTrue(StringUtils.isNotBlank(objectField.getType()),"字段类型不能为空");
-                AssertUtils.isTrue(StringUtils.isNotBlank(objectField.getName()),"字段名称不能为空");
+                AssertUtils.isTrue(StringUtils.isNotBlank(objectField.getType()), "字段类型不能为空");
+                AssertUtils.isTrue(StringUtils.isNotBlank(objectField.getName()), "字段名称不能为空");
             });
         }
     }
@@ -89,17 +97,21 @@ public class GenerateClassExecuteImpl implements GenerateClassExecute {
         javaInterface.setUri(adapter.getUri());
         javaInterface.setImports(packageProcessor.scanJavaInterfacePackage(javaInterface));
         javaInterface.addImports(packageProcessor.scanAdapterMethodPackage(adapter.getMethods()));
-        return generateEngine.generate("adapter", javaInterface);
+        return generateEngine.generate(ADAPTER, javaInterface);
     }
 
+    /**
+     * 校验适配器参数
+     *
+     * @param adapter 适配器
+     */
     private void checkAdapter(Adapter adapter) {
-        AssertUtils.isTrue(StringUtils.isNotBlank(adapter.getPackageName()),"包名不能为空");
-        AssertUtils.isTrue(StringUtils.isNotBlank(adapter.getClassName()),"类名不能为空");
-        if (CollectionUtils.isNotEmpty(adapter.getMethods())){
+        checkObjectDefinition(adapter);
+        if (CollectionUtils.isNotEmpty(adapter.getMethods())) {
             adapter.getMethods().stream().filter(Objects::nonNull).forEach(adapterMethod -> {
-                AssertUtils.isTrue(adapterMethod.getRequestType() != null,"请求类型不能为空");
-                AssertUtils.isTrue(adapterMethod.getObjectResponse() != null,"返回数据不能为空");
-                AssertUtils.isTrue(StringUtils.isNotBlank(adapterMethod.getName()),"方法名称不能为空");
+                AssertUtils.isTrue(adapterMethod.getRequestType() != null, "请求类型不能为空");
+                AssertUtils.isTrue(adapterMethod.getObjectResponse() != null, "返回数据不能为空");
+                AssertUtils.isTrue(StringUtils.isNotBlank(adapterMethod.getName()), "方法名称不能为空");
             });
         }
     }
@@ -117,21 +129,36 @@ public class GenerateClassExecuteImpl implements GenerateClassExecute {
         if (CollectionUtils.isNotEmpty(rpc.getMethods())) {
             Set<JavaMethod> methods = rpc.getMethods().stream().filter(Objects::nonNull)
                     .map(this::buildMethodJavaMethod).collect(Collectors.toSet());
+            javaInterface.setMethods(methods);
         }
         javaInterface.setImports(packageProcessor.scanJavaInterfacePackage(javaInterface));
         javaInterface.addImports(packageProcessor.scanMethodPackage(rpc.getMethods()));
-        return generateEngine.generate("rpc", javaInterface);
+        return generateEngine.generate(RPC, javaInterface);
     }
 
+    /**
+     * 校验RPC 参数
+     *
+     * @param rpc rpc
+     */
     private void checkRpc(Rpc rpc) {
-        AssertUtils.isTrue(StringUtils.isNotBlank(rpc.getPackageName()),"包名不能为空");
-        AssertUtils.isTrue(StringUtils.isNotBlank(rpc.getClassName()),"类名不能为空");
-        if (CollectionUtils.isNotEmpty(rpc.getMethods())){
+        checkObjectDefinition(rpc);
+        if (CollectionUtils.isNotEmpty(rpc.getMethods())) {
             rpc.getMethods().stream().filter(Objects::nonNull).forEach(method -> {
-                AssertUtils.isTrue(method.getObjectResponse() != null,"返回数据不能为空");
-                AssertUtils.isTrue(StringUtils.isNotBlank(method.getName()),"方法名称不能为空");
+                AssertUtils.isTrue(method.getObjectResponse() != null, "返回数据不能为空");
+                AssertUtils.isTrue(StringUtils.isNotBlank(method.getName()), "方法名称不能为空");
             });
         }
+    }
+
+    /**
+     * 校验对象定义
+     *
+     * @param objectDefinition 对象定义
+     */
+    private void checkObjectDefinition(ObjectDefinition objectDefinition) {
+        AssertUtils.isTrue(StringUtils.isNotBlank(objectDefinition.getPackageName()), "包名不能为空");
+        AssertUtils.isTrue(StringUtils.isNotBlank(objectDefinition.getClassName()), "类名不能为空");
     }
 
     /**
@@ -222,8 +249,8 @@ public class GenerateClassExecuteImpl implements GenerateClassExecute {
     /**
      * 处理字段
      *
-     * @param objectModel     模型
-     * @param javaModel java 模型
+     * @param objectModel 模型
+     * @param javaModel   java 模型
      */
     private void handleFields(ObjectModel objectModel, JavaModel javaModel) {
         if (CollectionUtils.isNotEmpty(objectModel.getFields())) {
@@ -235,6 +262,7 @@ public class GenerateClassExecuteImpl implements GenerateClassExecute {
 
     /**
      * 转换 java 字段
+     *
      * @param objectField 对象字段
      * @return JavaField
      */

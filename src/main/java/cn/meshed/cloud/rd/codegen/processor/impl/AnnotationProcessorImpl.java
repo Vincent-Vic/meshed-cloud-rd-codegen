@@ -2,7 +2,7 @@ package cn.meshed.cloud.rd.codegen.processor.impl;
 
 import cn.hutool.json.JSONUtil;
 import cn.meshed.cloud.rd.codegen.ObjectField;
-import cn.meshed.cloud.rd.codegen.config.GenerateProperties;
+import cn.meshed.cloud.rd.codegen.config.GenerateAutoProperties;
 import cn.meshed.cloud.rd.codegen.processor.AnnotationProcessor;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -31,7 +31,7 @@ import static cn.meshed.cloud.rd.codegen.constant.Constant.VALUE;
 @RequiredArgsConstructor
 public class AnnotationProcessorImpl implements AnnotationProcessor {
 
-    private final GenerateProperties generateProperties;
+    private final GenerateAutoProperties generateAutoProperties;
 
     /**
      * 生成字段注解
@@ -182,7 +182,7 @@ public class AnnotationProcessorImpl implements AnnotationProcessor {
     }
 
     private Map<String, Map<String, String>> getAnnotationRule() {
-        return generateProperties.getAnnotationRule();
+        return generateAutoProperties.getAnnotationRule();
     }
 
 

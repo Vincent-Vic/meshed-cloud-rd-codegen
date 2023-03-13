@@ -41,18 +41,26 @@ public class JavaMethod implements Comparable<JavaMethod>{
     private Set<String> annotations;
 
     /**
-     * 参数列表
+     * 参数列表 强制去重同名参数
      */
     @Setter(AccessLevel.NONE)
     private Set<JavaParameter> parameters;
 
-
+    /**
+     * 设置注解排序处理 （空注解列表无法设置）
+     *
+     * @param annotations 注解列表
+     */
     public void setAnnotations(Set<String> annotations) {
         if (CollectionUtils.isNotEmpty(annotations)){
             this.annotations = annotations.stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new));
         }
     }
-
+    /**
+     * 设置参数排序处理 （空参数列表无法设置）
+     *
+     * @param parameters 参数列表
+     */
     public void setParameters(Set<JavaParameter> parameters) {
         if (CollectionUtils.isNotEmpty(parameters)){
             this.parameters = parameters.stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new));
@@ -90,6 +98,12 @@ public class JavaMethod implements Comparable<JavaMethod>{
         return i;
     }
 
+    /**
+     * 方法名称和参数个数具有唯一性
+     *
+     * @param o object
+     * @return boolean
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {

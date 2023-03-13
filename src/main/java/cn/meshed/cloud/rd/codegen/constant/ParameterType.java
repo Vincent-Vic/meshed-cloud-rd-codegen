@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 /**
- * <h1></h1>
+ * <h1>参数类型枚举</h1>
  *
  * @author Vincent Vic
  * @version 1.0
@@ -18,15 +18,15 @@ public enum ParameterType {
     /**
      * 无注解
      */
-    NONE(null,null),
+    NONE(null, null),
     /**
      * Get类型
      */
-    PATH_VARIABLE("PathVariable","org.springframework.web.bind.annotation.PathVariable"),
+    PATH_VARIABLE("PathVariable", "org.springframework.web.bind.annotation.PathVariable"),
     /**
      * Post类型
      */
-    REQUEST_BODY("RequestBody","org.springframework.web.bind.annotation.RequestBody"),
+    REQUEST_BODY("RequestBody", "org.springframework.web.bind.annotation.RequestBody"),
     ;
 
     private final String annotation;

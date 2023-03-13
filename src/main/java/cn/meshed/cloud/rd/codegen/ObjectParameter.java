@@ -84,11 +84,11 @@ public class ObjectParameter {
             return false;
         }
         ObjectParameter that = (ObjectParameter) o;
-        return getType().equals(that.getType()) && getName().equals(that.getName());
+        return getName().equals(that.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getType(), getName());
+        return Objects.hash(getName());
     }
 }

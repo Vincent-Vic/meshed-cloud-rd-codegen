@@ -2,7 +2,7 @@ package cn.meshed.cloud.rd.codegen.processor.impl;
 
 import cn.meshed.cloud.rd.codegen.AdapterMethod;
 import cn.meshed.cloud.rd.codegen.ObjectMethod;
-import cn.meshed.cloud.rd.codegen.config.GenerateProperties;
+import cn.meshed.cloud.rd.codegen.config.GenerateAutoProperties;
 import cn.meshed.cloud.rd.codegen.model.JavaDefinition;
 import cn.meshed.cloud.rd.codegen.model.JavaInterface;
 import cn.meshed.cloud.rd.codegen.model.JavaModel;
@@ -25,7 +25,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class PackageProcessorImpl implements PackageProcessor {
 
-    private final GenerateProperties generateProperties;
+    private final GenerateAutoProperties generateAutoProperties;
 
     /**
      * 通过java对象类型获取导入的包
@@ -35,10 +35,10 @@ public class PackageProcessorImpl implements PackageProcessor {
      */
     @Override
     public String getBasePackage(String objectType) {
-        if (StringUtils.isEmpty(objectType) || generateProperties.getPackageMapping() == null) {
+        if (StringUtils.isEmpty(objectType) || generateAutoProperties.getPackageMapping() == null) {
             return null;
         }
-        return generateProperties.getPackageMapping().get(objectType);
+        return generateAutoProperties.getPackageMapping().get(objectType);
     }
 
     /**

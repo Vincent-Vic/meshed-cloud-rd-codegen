@@ -11,16 +11,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 
 /**
- * <h1>处理器注册Bean</h1>
+ * <h1>处理器注册Bean自动配置</h1>
  *
  * @author Vincent Vic
  * @version 1.0
  */
 @RequiredArgsConstructor
-public class ProcessorConfiguration {
+public class ProcessorAutoConfiguration {
 
     private final TemplateFactory templateFactory;
-    private final GenerateProperties generateProperties;
+    private final GenerateAutoProperties generateAutoProperties;
 
     @Bean
     public GenerateEngine generateEngine(){
@@ -28,10 +28,10 @@ public class ProcessorConfiguration {
     }
     @Bean
     public AnnotationProcessor annotationProcessor(){
-        return new AnnotationProcessorImpl(generateProperties);
+        return new AnnotationProcessorImpl(generateAutoProperties);
     }
     @Bean
     public PackageProcessor packageProcessor(){
-        return new PackageProcessorImpl(generateProperties);
+        return new PackageProcessorImpl(generateAutoProperties);
     }
 }

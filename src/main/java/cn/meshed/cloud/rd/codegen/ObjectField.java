@@ -51,6 +51,12 @@ public class ObjectField implements Serializable {
      */
     private boolean nonNull;
 
+    /**
+     * 不允许同名字段，哪怕类型或泛型不一样
+     *
+     * @param o object
+     * @return boolean
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -60,11 +66,11 @@ public class ObjectField implements Serializable {
             return false;
         }
         ObjectField that = (ObjectField) o;
-        return getName().equals(that.getName()) && getType().equals(that.getType()) && Objects.equals(getGeneric(), that.getGeneric());
+        return getName().equals(that.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getType(), getGeneric());
+        return Objects.hash(getName());
     }
 }

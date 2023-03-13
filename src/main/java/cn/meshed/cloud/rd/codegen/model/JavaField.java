@@ -51,18 +51,24 @@ public class JavaField implements Serializable, Comparable<JavaField> {
     @Setter(AccessLevel.NONE)
     private Set<String> annotations;
 
+    /**
+     * 设置注解排序处理 （空注解列表无法设置）
+     *
+     * @param annotations 注解列表
+     */
     public void setAnnotations(Set<String> annotations) {
-        if (CollectionUtils.isNotEmpty(annotations)){
+        if (CollectionUtils.isNotEmpty(annotations)) {
             this.annotations = annotations.stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new));
         }
     }
+
     /**
      * 校验
      */
     public void verification() {
         //包名中含类名设施处理特殊处理
-        AssertUtils.isTrue(StringUtils.isNotBlank(this.type),"类型不能为空");
-        AssertUtils.isTrue(StringUtils.isNotBlank(this.name),"名称不能为空");
+        AssertUtils.isTrue(StringUtils.isNotBlank(this.type), "类型不能为空");
+        AssertUtils.isTrue(StringUtils.isNotBlank(this.name), "名称不能为空");
     }
 
     /**
@@ -73,12 +79,18 @@ public class JavaField implements Serializable, Comparable<JavaField> {
     @Override
     public int compareTo(JavaField javaField) {
         int i = this.name.compareTo(javaField.getName());
-        if (i == 0){
+        if (i == 0) {
             throw new SysException("参数名称存在相同情况");
         }
         return i;
     }
 
+    /**
+     * 字段名称具有唯一性
+     *
+     * @param o object
+     * @return boolean
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {

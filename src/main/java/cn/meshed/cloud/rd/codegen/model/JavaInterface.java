@@ -17,10 +17,10 @@ import java.util.stream.Collectors;
  * @version 1.0
  */
 @Data
-public class JavaInterface extends JavaDefinition{
+public class JavaInterface extends JavaDefinition {
 
     /**
-     * 方法列表
+     * 方法列表 强制去重同名且同参数
      */
     @Setter(AccessLevel.NONE)
     private Set<JavaMethod> methods;
@@ -31,8 +31,13 @@ public class JavaInterface extends JavaDefinition{
      */
     private String uri;
 
+    /**
+     * 设置方法列表 方法列表排序处理 （方法列表为空无法进行操作）
+     *
+     * @param methods 方法列表
+     */
     public void setMethods(Set<JavaMethod> methods) {
-        if (CollectionUtils.isNotEmpty(methods)){
+        if (CollectionUtils.isNotEmpty(methods)) {
             this.methods = methods.stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new));
         }
     }

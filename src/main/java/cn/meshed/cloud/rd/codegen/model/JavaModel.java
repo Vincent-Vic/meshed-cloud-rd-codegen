@@ -27,6 +27,11 @@ public class JavaModel extends JavaDefinition {
     @Setter(AccessLevel.NONE)
     private Set<JavaField> fields;
 
+    /**
+     * 设置字段排序处理 （空字段列表无法设置）
+     *
+     * @param fields 字段列表
+     */
     public void setFields(Set<JavaField> fields) {
         if (CollectionUtils.isNotEmpty(fields)){
             this.fields = fields.stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new));

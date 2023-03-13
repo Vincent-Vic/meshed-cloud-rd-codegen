@@ -3,6 +3,7 @@ package cn.meshed.cloud.rd.codegen;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -71,9 +72,15 @@ public class ObjectMethod {
      * 返回类型封装数据
      */
     public String getResponseData() {
-        return objectResponse == null ? "void" :objectResponse.toString();
+        return objectResponse == null ? "void" : objectResponse.toString();
     }
 
+    /**
+     * 名称和参数数量具有唯一性
+     *
+     * @param o object
+     * @return boolean
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -83,12 +90,20 @@ public class ObjectMethod {
             return false;
         }
         ObjectMethod that = (ObjectMethod) o;
-        return getName().equals(that.getName()) && Objects.equals(getObjectResponse(), that.getObjectResponse())
-                && Objects.equals(getParameters(), that.getParameters());
+        int i = 0, j = 0;
+        if (CollectionUtils.isNotEmpty(getParameters())) {
+            i = getParameters().size();
+        }
+        if (CollectionUtils.isNotEmpty(that.getParameters())) {
+            j = that.getParameters().size();
+        }
+
+        //名称和参数数量一样视为相同
+        return getName().equals(that.getName()) && i == j;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getObjectResponse(), getParameters());
+        return Objects.hash(getName());
     }
 }

@@ -44,6 +44,11 @@ public class JavaParameter implements Comparable<JavaParameter>{
      */
     private String explain;
 
+    /**
+     * 设置注解排序处理 （空注解列表无法设置）
+     *
+     * @param annotations 注解列表
+     */
     public void setAnnotations(Set<String> annotations) {
         if (CollectionUtils.isNotEmpty(annotations)){
             this.annotations = annotations.stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new));
@@ -73,6 +78,11 @@ public class JavaParameter implements Comparable<JavaParameter>{
         return i;
     }
 
+    /**
+     * 参数名称具有唯一性
+     * @param o object
+     * @return boolean
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {

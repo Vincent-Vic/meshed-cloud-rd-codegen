@@ -1,7 +1,7 @@
 package cn.meshed.cloud.rd.codegen.constant;
 
 /**
- * <h1></h1>
+ * <h1>通用常量区</h1>
  *
  * @author Vincent Vic
  * @version 1.0
@@ -29,11 +29,6 @@ public interface Constant {
     String ANNOTATION_SINGLE_PARAMETER_FORMAT = "@%s(%s=%s)";
 
     /**
-     * 参数格式
-     */
-    String PARAMETER_FORMAT = "%s=%s";
-
-    /**
      * 泛型格式
      */
     String GENERIC_FORMAT = "%s<%s>";
@@ -57,5 +52,23 @@ public interface Constant {
      * 数字
      */
     String INTEGER = "Integer";
+
+    /**
+     * 适配器
+     */
+    String ADAPTER = "adapter";
+
+
+    /**
+     * RPC
+     */
+    String RPC = "rpc";
+
+    /**
+     * 模型
+     */
+    String MODEL = "model";
+
+
 
 }

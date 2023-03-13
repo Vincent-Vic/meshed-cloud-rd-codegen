@@ -16,7 +16,7 @@ import java.util.Set;
 public class ObjectModel extends ObjectDefinition {
 
     /**
-     * 字段
+     * 字段 保证字段名称不重复
      */
     private Set<ObjectField> fields;
 

@@ -1,6 +1,6 @@
 package cn.meshed.cloud.rd.codegen;
 
-import cn.meshed.cloud.rd.codegen.config.GenerateProperties;
+import cn.meshed.cloud.rd.codegen.config.GenerateAutoProperties;
 import cn.meshed.cloud.rd.codegen.factory.TemplateFactory;
 import cn.meshed.cloud.rd.codegen.impl.GenerateClassExecuteImpl;
 import cn.meshed.cloud.rd.codegen.processor.AnnotationProcessor;
@@ -67,11 +67,11 @@ public class TestBeanFactory {
             put("message","String");
         }});
     }};
-    public static GenerateProperties newGenerateProperties(){
-        GenerateProperties generateProperties = new GenerateProperties();
-        generateProperties.setPackageMapping(BASE_PACKAGE_MAPPING);
-        generateProperties.setAnnotationRule(ANNOTATION_RULE);
-        return generateProperties;
+    public static GenerateAutoProperties newGenerateProperties(){
+        GenerateAutoProperties generateAutoProperties = new GenerateAutoProperties();
+        generateAutoProperties.setPackageMapping(BASE_PACKAGE_MAPPING);
+        generateAutoProperties.setAnnotationRule(ANNOTATION_RULE);
+        return generateAutoProperties;
     }
 
     public static GenerateEngine newGenerateEngine(){

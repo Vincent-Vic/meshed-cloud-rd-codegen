@@ -18,23 +18,23 @@ public enum RequestType {
     /**
      * Get类型
      */
-    GET("GetMapping","org.springframework.web.bind.annotation.GetMapping"),
+    GET("GetMapping", "org.springframework.web.bind.annotation.GetMapping"),
     /**
      * Post类型
      */
-    POST("PostMapping","org.springframework.web.bind.annotation.PostMapping"),
+    POST("PostMapping", "org.springframework.web.bind.annotation.PostMapping"),
     /**
      * Put类型
      */
-    PUT("PutMapping","org.springframework.web.bind.annotation.PutMapping"),
+    PUT("PutMapping", "org.springframework.web.bind.annotation.PutMapping"),
     /**
      * Delete类型
      */
-    DELETE("DeleteMapping","org.springframework.web.bind.annotation.DeleteMapping"),
+    DELETE("DeleteMapping", "org.springframework.web.bind.annotation.DeleteMapping"),
     /**
      * Patch类型
      */
-    PATCH("PatchMapping","org.springframework.web.bind.annotation.PatchMapping"),
+    PATCH("PatchMapping", "org.springframework.web.bind.annotation.PatchMapping"),
     ;
 
     private final String mapping;
