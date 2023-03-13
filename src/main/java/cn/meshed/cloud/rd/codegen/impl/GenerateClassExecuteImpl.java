@@ -22,7 +22,6 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -118,7 +117,6 @@ public class GenerateClassExecuteImpl implements GenerateClassExecute {
         if (CollectionUtils.isNotEmpty(rpc.getMethods())) {
             Set<JavaMethod> methods = rpc.getMethods().stream().filter(Objects::nonNull)
                     .map(this::buildMethodJavaMethod).collect(Collectors.toSet());
-            javaInterface.setMethods(methods);
         }
         javaInterface.setImports(packageProcessor.scanJavaInterfacePackage(javaInterface));
         javaInterface.addImports(packageProcessor.scanMethodPackage(rpc.getMethods()));
@@ -166,6 +164,7 @@ public class GenerateClassExecuteImpl implements GenerateClassExecute {
         javaMethod.setName(method.getName());
         javaMethod.setAnnotations(method.getAnnotations());
         javaMethod.verification();
+
         return javaMethod;
     }
 

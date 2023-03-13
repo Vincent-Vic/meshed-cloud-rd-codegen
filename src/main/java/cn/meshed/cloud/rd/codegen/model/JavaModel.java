@@ -32,4 +32,5 @@ public class JavaModel extends JavaDefinition {
             this.fields = fields.stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new));
         }
     }
+
 }

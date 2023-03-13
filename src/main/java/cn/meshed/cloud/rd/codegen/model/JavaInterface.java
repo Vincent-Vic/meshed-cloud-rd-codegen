@@ -25,6 +25,7 @@ public class JavaInterface extends JavaDefinition{
     @Setter(AccessLevel.NONE)
     private Set<JavaMethod> methods;
 
+
     /**
      * uri
      */

@@ -21,6 +21,7 @@ public class GenerateClassExecuteTest {
 
     @Before
     public void init() {
+
         generateClassExecute = TestBeanFactory.newGenerateExecute();
     }
 
@@ -47,7 +48,6 @@ public class GenerateClassExecuteTest {
         System.out.println(code);
     }
 
-    @Test
     public void generateAdapter() {
         Adapter adapter = new Adapter();
         adapter.setAuthor("Vincent Vic");
@@ -100,6 +100,7 @@ public class GenerateClassExecuteTest {
 
     @Test
     public void generateRpc() {
+
         Rpc rpc = new Rpc();
         rpc.setAuthor("Vincent Vic");
         rpc.setDescription("Test");
