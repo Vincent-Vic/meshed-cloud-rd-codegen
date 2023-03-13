@@ -129,7 +129,6 @@ public class GenerateClassExecuteImpl implements GenerateClassExecute {
         if (CollectionUtils.isNotEmpty(rpc.getMethods())) {
             Set<JavaMethod> methods = rpc.getMethods().stream().filter(Objects::nonNull)
                     .map(this::buildMethodJavaMethod).collect(Collectors.toSet());
-            javaInterface.setMethods(methods);
         }
         javaInterface.setImports(packageProcessor.scanJavaInterfacePackage(javaInterface));
         javaInterface.addImports(packageProcessor.scanMethodPackage(rpc.getMethods()));
