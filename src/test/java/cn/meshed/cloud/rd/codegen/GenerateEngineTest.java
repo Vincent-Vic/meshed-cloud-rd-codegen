@@ -6,7 +6,6 @@ import cn.meshed.cloud.rd.codegen.model.JavaMethod;
 import cn.meshed.cloud.rd.codegen.model.JavaModel;
 import cn.meshed.cloud.rd.codegen.model.JavaParameter;
 import cn.meshed.cloud.rd.codegen.processor.GenerateEngine;
-import cn.meshed.cloud.rd.codegen.utils.JsonUtils;
 import org.junit.Before;
 import org.junit.Test;
 
