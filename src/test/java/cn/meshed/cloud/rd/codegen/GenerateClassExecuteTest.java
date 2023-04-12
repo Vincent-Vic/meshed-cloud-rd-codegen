@@ -48,6 +48,27 @@ public class GenerateClassExecuteTest {
         System.out.println(code);
     }
 
+    @Test
+    public void buildEnum() {
+        ObjectEnum objectEnum = new ObjectEnum();
+        objectEnum.setAuthor("Vincent Vic");
+        objectEnum.setDescription("Test");
+        objectEnum.setExplain("测试");
+        objectEnum.setClassName("BaseGenericsEnum");
+        objectEnum.setPackageName("cn.meshed.cloud.rd");
+        objectEnum.setVersion("1.0.0");
+        objectEnum.setSuperClass("Object");
+        ObjectEnumValue objectEnumValue = new ObjectEnumValue();
+        objectEnumValue.setExplain("Test");
+        objectEnumValue.setValue(1);
+        objectEnumValue.setName("TEST");
+        objectEnumValue.setExt("TEST");
+
+        objectEnum.setEnumValues(Collections.singleton(objectEnumValue));
+        String code = generateClassExecute.buildEnum(objectEnum);
+        System.out.println(code);
+    }
+
     public void generateAdapter() {
         Adapter adapter = new Adapter();
         adapter.setAuthor("Vincent Vic");

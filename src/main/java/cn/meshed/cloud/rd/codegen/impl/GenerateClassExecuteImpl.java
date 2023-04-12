@@ -3,12 +3,16 @@ package cn.meshed.cloud.rd.codegen.impl;
 import cn.meshed.cloud.rd.codegen.Adapter;
 import cn.meshed.cloud.rd.codegen.GenerateClassExecute;
 import cn.meshed.cloud.rd.codegen.ObjectDefinition;
+import cn.meshed.cloud.rd.codegen.ObjectEnum;
+import cn.meshed.cloud.rd.codegen.ObjectEnumValue;
 import cn.meshed.cloud.rd.codegen.ObjectField;
 import cn.meshed.cloud.rd.codegen.ObjectMethod;
 import cn.meshed.cloud.rd.codegen.ObjectModel;
 import cn.meshed.cloud.rd.codegen.ObjectParameter;
 import cn.meshed.cloud.rd.codegen.Rpc;
 import cn.meshed.cloud.rd.codegen.constant.ParameterType;
+import cn.meshed.cloud.rd.codegen.model.JavaEnum;
+import cn.meshed.cloud.rd.codegen.model.JavaEnumValue;
 import cn.meshed.cloud.rd.codegen.model.JavaField;
 import cn.meshed.cloud.rd.codegen.model.JavaInterface;
 import cn.meshed.cloud.rd.codegen.model.JavaMethod;
@@ -28,6 +32,7 @@ import java.util.stream.Collectors;
 
 import static cn.meshed.cloud.rd.codegen.constant.Constant.ADAPTER;
 import static cn.meshed.cloud.rd.codegen.constant.Constant.ANNOTATION_SIMPLE_PARAMETER_FORMAT;
+import static cn.meshed.cloud.rd.codegen.constant.Constant.ENUM;
 import static cn.meshed.cloud.rd.codegen.constant.Constant.MODEL;
 import static cn.meshed.cloud.rd.codegen.constant.Constant.RPC;
 
@@ -129,10 +134,49 @@ public class GenerateClassExecuteImpl implements GenerateClassExecute {
         if (CollectionUtils.isNotEmpty(rpc.getMethods())) {
             Set<JavaMethod> methods = rpc.getMethods().stream().filter(Objects::nonNull)
                     .map(this::buildMethodJavaMethod).collect(Collectors.toSet());
+            javaInterface.setMethods(methods);
         }
         javaInterface.setImports(packageProcessor.scanJavaInterfacePackage(javaInterface));
         javaInterface.addImports(packageProcessor.scanMethodPackage(rpc.getMethods()));
         return generateEngine.generate(RPC, javaInterface);
+    }
+
+    /**
+     * 构建枚举接口
+     *
+     * @param objectEnum 枚举
+     * @return 代码
+     */
+    @Override
+    public String buildEnum(ObjectEnum objectEnum) {
+        JavaEnum javaEnum = getEnum(objectEnum);
+        return generateEngine.generate(ENUM, javaEnum);
+    }
+
+    private JavaEnum getEnum(ObjectEnum objectEnum) {
+        JavaEnum javaEnum = new JavaEnum();
+        javaEnum.setClassName(objectEnum.getClassName());
+        javaEnum.setAuthor(objectEnum.getAuthor());
+        javaEnum.setDescription(objectEnum.getDescription());
+        javaEnum.setExplain(objectEnum.getExplain());
+        javaEnum.setVersion(objectEnum.getVersion());
+        javaEnum.setPackageName(objectEnum.getPackageName());
+        if (CollectionUtils.isNotEmpty(objectEnum.getEnumValues())){
+            Set<JavaEnumValue> enumValues = objectEnum.getEnumValues().stream()
+                    .map(this::toJavaEnumValue).collect(Collectors.toSet());
+            javaEnum.setEnumValues(enumValues);
+        }
+
+        return javaEnum;
+    }
+
+    private JavaEnumValue toJavaEnumValue(ObjectEnumValue objectEnumValue) {
+        JavaEnumValue javaEnumValue = new JavaEnumValue();
+        javaEnumValue.setExplain(objectEnumValue.getExplain());
+        javaEnumValue.setValue(objectEnumValue.getValue());
+        javaEnumValue.setName(objectEnumValue.getName());
+        javaEnumValue.setExt(objectEnumValue.getExt());
+        return javaEnumValue;
     }
 
     /**

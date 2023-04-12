@@ -31,4 +31,12 @@ public interface GenerateClassExecute {
      * @return 代码
      */
     String buildRpc(Rpc rpc);
+
+    /**
+     * 构建枚举接口
+     *
+     * @param objectEnum 枚举
+     * @return 代码
+     */
+    String buildEnum(ObjectEnum objectEnum);
 }

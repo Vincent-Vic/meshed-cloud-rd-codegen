@@ -2,6 +2,7 @@ package cn.meshed.cloud.rd.codegen.model;
 
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
  * @author Vincent Vic
  * @version 1.0
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class JavaInterface extends JavaDefinition {
 

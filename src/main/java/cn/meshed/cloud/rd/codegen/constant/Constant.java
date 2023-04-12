@@ -69,6 +69,11 @@ public interface Constant {
      */
     String MODEL = "model";
 
+    /**
+     * 枚举
+     */
+    String ENUM = "enum";
+
 
 
 }

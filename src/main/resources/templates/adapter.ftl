@@ -1,8 +1,8 @@
 package ${packageName};
 
 import org.springframework.web.bind.annotation.RequestMapping;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import javax.validation.Valid;
 
 <#if imports??>
@@ -32,13 +32,13 @@ public interface ${className} <#if superClass??>extends ${superClass} </#if>{
 </#list></#if>
     * @return {@link ${method.response}}
     */
-    @ApiOperation(value = "${method.explain!method.name}")
+    @Operation(summary = "${method.explain!method.name}")
 <#if method.annotations??>
     <#list method.annotations as annotation>
     ${annotation}
     </#list>
 </#if>
-    ${method.response} ${method.name}(<#if method.parameters??><#assign index = 0><#list method.parameters as parameter><#if index != 0>, </#if><#assign index = index+1>@ApiParam("${parameter.explain!parameter.name}") @Valid <#if parameter.annotations??><#list parameter.annotations as annotation>${annotation} </#list></#if>${parameter.type} ${parameter.name}</#list></#if>);
+    ${method.response} ${method.name}(<#if method.parameters??><#assign index = 0><#list method.parameters as parameter><#if index != 0>, </#if><#assign index = index+1>@Parameter(description = "${parameter.explain!parameter.name}") @Valid <#if parameter.annotations??><#list parameter.annotations as annotation>${annotation} </#list></#if>${parameter.type} ${parameter.name}</#list></#if>);
     </#list>
 </#if>
 

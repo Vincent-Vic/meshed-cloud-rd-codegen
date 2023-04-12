@@ -1,6 +1,6 @@
 package ${packageName};
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -19,7 +19,7 @@ import ${import};
 */
 @EqualsAndHashCode(callSuper = false)
 @Data
-@ApiModel(value="${explain!className}",description="${description!className}")
+@Schema(description = "${description!''}")
 public class ${className} extends ${superClass} {
 
     private static final long serialVersionUID = 1L;
@@ -29,6 +29,7 @@ public class ${className} extends ${superClass} {
     /**
     * ${field.explain}
     */
+    @Schema(description = "${field.explain}")
     <#list field.annotations as annotation>
     ${annotation}
     </#list>
