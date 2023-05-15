@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import javax.validation.Valid;
-
+import java.io.Serializable;
 <#if imports??>
     <#list imports as import>
 import ${import};

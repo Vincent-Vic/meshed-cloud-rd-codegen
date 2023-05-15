@@ -5,7 +5,7 @@ package ${packageName};
 import ${import};
     </#list>
 </#if>
-
+import java.io.Serializable;
 
 /**
 * <h1>${explain!className}</h1>
