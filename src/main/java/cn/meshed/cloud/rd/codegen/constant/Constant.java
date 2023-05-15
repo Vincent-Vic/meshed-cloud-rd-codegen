@@ -39,9 +39,14 @@ public interface Constant {
     String MESSAGE = "message";
 
     /**
-     * 消息
+     * 值
      */
     String VALUE = "value";
+
+    /**
+     * 描述
+     */
+    String DESCRIPTION = "description";
 
     /**
      * 字符串

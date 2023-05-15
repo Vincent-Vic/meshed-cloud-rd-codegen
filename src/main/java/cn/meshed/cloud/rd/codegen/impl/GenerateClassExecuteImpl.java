@@ -166,7 +166,7 @@ public class GenerateClassExecuteImpl implements GenerateClassExecute {
                     .map(this::toJavaEnumValue).collect(Collectors.toSet());
             javaEnum.setEnumValues(enumValues);
         }
-
+        javaEnum.verification();
         return javaEnum;
     }
 

@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import javax.validation.Valid;
-
+import java.io.Serializable;
 <#if imports??>
     <#list imports as import>
 import ${import};
@@ -20,7 +20,9 @@ import ${import};
 * @version ${version!'1.0.0'}
 */
 @RequestMapping("${uri!'/'+className}")
-public interface ${className} <#if superClass??>extends ${superClass} </#if>{
+public interface ${className} extends Serializable {
+
+    long serialVersionUID = 1L;
 
 <#if methods??>
     <#list methods as method>

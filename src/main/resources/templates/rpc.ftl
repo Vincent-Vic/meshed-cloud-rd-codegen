@@ -5,7 +5,7 @@ package ${packageName};
 import ${import};
     </#list>
 </#if>
-
+import java.io.Serializable;
 
 /**
 * <h1>${explain!className}</h1>
@@ -14,7 +14,9 @@ import ${import};
 * @author ${author!'Meshed Cloud RD'}
 * @version ${version!'1.0.0'}
 */
-public interface ${className} <#if superClass??>extends ${superClass} </#if>{
+public interface ${className} extends Serializable {
+
+    long serialVersionUID = 1L;
 
 <#if methods??>
     <#list methods as method>
