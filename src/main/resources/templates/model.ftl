@@ -1,6 +1,5 @@
 package ${packageName};
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -29,7 +28,6 @@ public class ${className} extends ${superClass} {
     /**
     * ${field.explain}
     */
-    @Schema(description = "${field.explain}")
     <#list field.annotations as annotation>
     ${annotation}
     </#list>

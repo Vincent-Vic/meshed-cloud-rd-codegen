@@ -14,13 +14,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import static cn.meshed.cloud.rd.codegen.constant.Constant.ANNOTATION_FORMAT;
-import static cn.meshed.cloud.rd.codegen.constant.Constant.ANNOTATION_PARAMETER_FORMAT;
-import static cn.meshed.cloud.rd.codegen.constant.Constant.ANNOTATION_SINGLE_PARAMETER_FORMAT;
-import static cn.meshed.cloud.rd.codegen.constant.Constant.INTEGER;
-import static cn.meshed.cloud.rd.codegen.constant.Constant.MESSAGE;
-import static cn.meshed.cloud.rd.codegen.constant.Constant.STRING;
-import static cn.meshed.cloud.rd.codegen.constant.Constant.VALUE;
+import static cn.meshed.cloud.rd.codegen.constant.Constant.*;
 
 /**
  * <h1>注解处理器</h1>
@@ -140,7 +134,7 @@ public class AnnotationProcessorImpl implements AnnotationProcessor {
     public Set<String> generateModelFieldAnnotation(ObjectField objectField) {
         Set<String> annotations = generateFieldAnnotation(objectField);
         String explain = StringUtils.isNotBlank(objectField.getExplain()) ? objectField.getExplain() : objectField.getName();
-        annotations.add(getAnnotation("ApiModelProperty", VALUE, "\""+explain+"\""));
+        annotations.add(getAnnotation("Schema", DESCRIPTION, "\""+explain+"\""));
         return annotations;
     }
 

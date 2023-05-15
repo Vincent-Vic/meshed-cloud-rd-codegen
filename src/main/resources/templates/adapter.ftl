@@ -20,7 +20,9 @@ import ${import};
 * @version ${version!'1.0.0'}
 */
 @RequestMapping("${uri!'/'+className}")
-public interface ${className} <#if superClass??>extends ${superClass} </#if>{
+public interface ${className} extends Serializable {
+
+    long serialVersionUID = 1L;
 
 <#if methods??>
     <#list methods as method>
